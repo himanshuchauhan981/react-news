@@ -8,6 +8,7 @@
 
 .news_image {
 	height: 20rem;
+	max-width: 100%;
 }
 
 .icon,
@@ -21,4 +22,19 @@
 
 .badge-margin {
 	margin-right: 0.7rem;
+}
+
+.avatar-size {
+	width: 55px !important;
+	height: 55px !important;
+}
+
+.news_headline {
+	font-family: 'Roboto Condensed';
+	font-size: 22px;
+}
+
+.news_content {
+	font-family: 'Roboto Condensed';
+	font-size: 16px;
 }

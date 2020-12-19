@@ -21,7 +21,11 @@ const NewsBody = (props) => {
 					>
 						<NewsList />
 					</div>
-					<div className='col-md-5'>
+					<div
+						className={`col-md-5 pt-4 ${
+							news_length !== 0 ? 'bg-grey' : ''
+						}`}
+					>
 						{news_length !== 0 ? <NewsItem /> : null}
 					</div>
 				</div>

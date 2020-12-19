@@ -8,7 +8,6 @@ import {
 	CardActions,
 	Typography,
 	Tooltip,
-	Button,
 } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -23,7 +22,11 @@ const NewsList = (props) => {
 		<Card key={index} className='my-4'>
 			<CardHeader
 				avatar={
-					<Avatar style={{ backgroundColor: color() }} aria-label='news'>
+					<Avatar
+						style={{ backgroundColor: color() }}
+						aria-label='news'
+						className='avatar-size'
+					>
 						{news.source.name.slice(0, 1)}
 					</Avatar>
 				}
@@ -64,7 +67,7 @@ const NewsList = (props) => {
 									(favorite) => favorite.author === news.author
 								).length !== 0
 									? 'primary'
-									: ''
+									: 'action'
 							}
 						/>
 					</IconButton>
