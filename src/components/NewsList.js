@@ -12,9 +12,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Favorite, OpenInNewOutlined } from '@material-ui/icons';
 
+import * as ActionType from '../action';
+
 const NewsList = (props) => {
 	let news = props.news_list.map((news, index) => (
-		<Card key={index}>
+		<Card key={index} onClick={() => props.set_particular_news(news)}>
 			<CardHeader
 				avatar={<Avatar aria-label='news'>R</Avatar>}
 				title={news.title}
@@ -43,10 +45,20 @@ const NewsList = (props) => {
 };
 
 const mapStateToProps = (state) => {
-	console.log(state.source_news);
 	return {
 		news_list: state.source_news,
 	};
 };
 
-export default connect(mapStateToProps)(NewsList);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		set_particular_news: (data) => {
+			dispatch({
+				type: ActionType.SET_PARTICULAR_NEWS,
+				data: data,
+			});
+		},
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsList);
