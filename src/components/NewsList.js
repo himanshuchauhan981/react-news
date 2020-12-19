@@ -8,24 +8,19 @@ import {
 	CardActions,
 	Typography,
 	Tooltip,
+	Button,
 } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Favorite, OpenInNewOutlined } from '@material-ui/icons';
+import { Favorite, Launch, OpenInNewOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import color from 'randomcolor';
 
 import * as ActionType from '../action';
 
-let addNewsToFavorites = () => {};
-
 const NewsList = (props) => {
 	let news = props.news_list.map((news, index) => (
-		<Card
-			key={index}
-			onClick={() => props.set_particular_news(news)}
-			className='my-4'
-		>
+		<Card key={index} className='my-4'>
 			<CardHeader
 				avatar={
 					<Avatar style={{ backgroundColor: color() }} aria-label='news'>
@@ -51,13 +46,35 @@ const NewsList = (props) => {
 					{news.description}
 				</Typography>
 			</CardContent>
-			<CardActions disableSpacing>
+			<CardActions>
 				<Tooltip
 					title='Add to Favorites'
-					onClick={() => addNewsToFavorites()}
+					onClick={() =>
+						props.favorites.filter(
+							(favorite) => favorite.author === news.author
+						).length === 0
+							? props.add_news_to_favorites(news)
+							: props.remove_news_from_favorites(news.author)
+					}
 				>
 					<IconButton aria-label='add to favorites'>
-						<Favorite />
+						<Favorite
+							color={
+								props.favorites.filter(
+									(favorite) => favorite.author === news.author
+								).length !== 0
+									? 'primary'
+									: ''
+							}
+						/>
+					</IconButton>
+				</Tooltip>
+				<Tooltip title='Open'>
+					<IconButton
+						aria-label='Open'
+						onClick={() => props.set_particular_news(news)}
+					>
+						<Launch />
 					</IconButton>
 				</Tooltip>
 			</CardActions>
@@ -69,6 +86,7 @@ const NewsList = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		news_list: state.source_news,
+		favorites: state.favorites,
 	};
 };
 
@@ -77,7 +95,19 @@ const mapDispatchToProps = (dispatch) => {
 		set_particular_news: (data) => {
 			dispatch({
 				type: ActionType.SET_PARTICULAR_NEWS,
-				data: data,
+				data,
+			});
+		},
+		add_news_to_favorites: (data) => {
+			dispatch({
+				type: ActionType.ADD_NEWS_TO_FAVORITES,
+				data,
+			});
+		},
+		remove_news_from_favorites: (author) => {
+			dispatch({
+				type: ActionType.REMOVE_NEWS_FROM_FAVORITES,
+				author,
 			});
 		},
 	};

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Badge,
 	Collapse,
 	List,
 	ListItem,
@@ -11,7 +12,7 @@ import {
 	ExpandMore,
 	AddLocation,
 	ExpandLess,
-	OpenInNew,
+	OpenInBrowser,
 } from '@material-ui/icons';
 import * as ActionType from '../action';
 import { connect } from 'react-redux';
@@ -63,7 +64,7 @@ class Sources extends React.Component {
 				onClick={() => this.get_news_from_source(source.id)}
 			>
 				<ListItemText primary={source.name} />
-				<OpenInNew
+				<OpenInBrowser
 					fontSize='small'
 					onClick={() => window.open(source.url)}
 				/>
@@ -76,7 +77,12 @@ class Sources extends React.Component {
 						<Star className='icon' />
 					</ListItemIcon>
 					<ListItemText className='icon-name'>Favorites</ListItemText>
-					<ExpandMore className='icon' />
+					<Badge
+						color='secondary'
+						badgeContent={this.props.total_favorites}
+						className='badge-margin'
+						showZero
+					/>
 				</ListItem>
 				<ListItem button onClick={this.handle_sources}>
 					<ListItemIcon>
@@ -99,6 +105,12 @@ class Sources extends React.Component {
 	}
 }
 
+const mapStateToProps = (state) => {
+	return {
+		total_favorites: state.favorites.length,
+	};
+};
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		set_source_news: (data) => {
@@ -110,4 +122,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Sources);
+export default connect(mapStateToProps, mapDispatchToProps)(Sources);
