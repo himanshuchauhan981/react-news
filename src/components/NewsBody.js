@@ -6,7 +6,7 @@ import NewsList from './NewsList';
 import Sources from './Sources';
 
 const NewsBody = (props) => {
-	let news_length = Object.keys(props.news).length;
+	let news_length = Object.keys(props.particular_news).length;
 	return (
 		<div className='mt-6'>
 			<div className='container-fluid h-100'>
@@ -14,7 +14,11 @@ const NewsBody = (props) => {
 					<div className='col-md-2 bg-secondary p-0'>
 						<Sources />
 					</div>
-					<div className='col-md-5'>
+					<div
+						className={`col-md-5 ${
+							props.source_news.length !== 0 ? 'bg-grey' : ''
+						}`}
+					>
 						<NewsList />
 					</div>
 					<div className='col-md-5'>
@@ -28,7 +32,8 @@ const NewsBody = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		news: state.particular_news,
+		particular_news: state.particular_news,
+		source_news: state.source_news,
 	};
 };
 
