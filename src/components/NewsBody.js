@@ -1,4 +1,5 @@
 import React from 'react';
+import NewsList from './NewsList';
 import Sources from './Sources';
 
 const NewsBody = () => {
@@ -9,7 +10,9 @@ const NewsBody = () => {
 					<div className='col-md-2 bg-secondary p-0'>
 						<Sources />
 					</div>
-					<div className='col-md-5'></div>
+					<div className='col-md-5'>
+						<NewsList />
+					</div>
 					<div className='col-md-5'></div>
 				</div>
 			</div>

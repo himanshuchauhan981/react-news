@@ -20,3 +20,7 @@
 	overflow-y: scroll;
 	height: 86vh;
 }
+
+.news_image {
+	height: 20rem;
+}

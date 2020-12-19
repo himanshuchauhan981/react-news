@@ -51,10 +51,10 @@ class Sources extends React.Component {
 	get_news_from_source = (id) => {
 		axios
 			.get(
-				`https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${this.API_KEY}`
+				`https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=${this.API_KEY}`
 			)
 			.then((res) => {
-				this.props.set_source_news(res.data);
+				this.props.set_source_news(res.data.articles);
 			});
 	};
 
