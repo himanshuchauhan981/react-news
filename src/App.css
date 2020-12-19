@@ -6,21 +6,11 @@
 	margin-top: 4rem;
 }
 
-.sidebar {
-	display: flex;
-	flex-direction: column;
-	height: 80%;
-	justify-content: space-between;
-	overflow-y: auto;
-	position: relative;
-}
-
-.sample-sidebar {
-	padding-top: 20px;
-	overflow-y: scroll;
-	height: 86vh;
-}
-
 .news_image {
 	height: 20rem;
+}
+
+.icon,
+.icon-name {
+	color: white;
 }

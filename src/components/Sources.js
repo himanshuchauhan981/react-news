@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {
 	Collapse,
 	List,
@@ -14,9 +13,10 @@ import {
 	ExpandLess,
 	OpenInNew,
 } from '@material-ui/icons';
-
 import * as ActionType from '../action';
 import { connect } from 'react-redux';
+
+import NewsService from '../services/newsApi';
 
 class Sources extends React.Component {
 	constructor() {
@@ -26,20 +26,19 @@ class Sources extends React.Component {
 			open_sources: false,
 		};
 		this.API_KEY = process.env.REACT_APP_API_KEY;
+		this.news_service = new NewsService();
 	}
 
 	componentDidMount() {
-		axios
-			.get(`https://newsapi.org/v2/sources?apiKey=${this.API_KEY}`)
-			.then((res) => {
-				let sources = res.data.sources.slice(5, 10);
-				let sources_list = sources.map((source) => ({
-					id: source.id,
-					name: source.name,
-					url: source.url,
-				}));
-				this.setState({ sources: sources_list });
-			});
+		this.news_service.get_news_sources().then((res) => {
+			let sources = res.data.sources.slice(5, 10);
+			let sources_list = sources.map((source) => ({
+				id: source.id,
+				name: source.name,
+				url: source.url,
+			}));
+			this.setState({ sources: sources_list });
+		});
 	}
 
 	handle_sources = () => {
@@ -49,13 +48,9 @@ class Sources extends React.Component {
 	};
 
 	get_news_from_source = (id) => {
-		axios
-			.get(
-				`https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=${this.API_KEY}`
-			)
-			.then((res) => {
-				this.props.set_source_news(res.data.articles);
-			});
+		this.news_service.get_news_from_source(id).then((res) => {
+			this.props.set_source_news(res.data.articles);
+		});
 	};
 
 	render() {
@@ -78,17 +73,21 @@ class Sources extends React.Component {
 			<List component='nav'>
 				<ListItem button>
 					<ListItemIcon>
-						<Star />
+						<Star className='icon' />
 					</ListItemIcon>
-					<ListItemText>Favorites</ListItemText>
-					<ExpandMore />
+					<ListItemText className='icon-name'>Favorites</ListItemText>
+					<ExpandMore className='icon' />
 				</ListItem>
 				<ListItem button onClick={this.handle_sources}>
 					<ListItemIcon>
-						<AddLocation />
+						<AddLocation className='icon' />
 					</ListItemIcon>
-					<ListItemText>Sources</ListItemText>
-					{open_sources ? <ExpandLess /> : <ExpandMore />}
+					<ListItemText className='icon-name'>Sources</ListItemText>
+					{open_sources ? (
+						<ExpandLess className='icon' />
+					) : (
+						<ExpandMore className='icon' />
+					)}
 				</ListItem>
 				<Collapse in={open_sources} timeout='auto' unmountOnExit>
 					<List component='div' disablePadding>
