@@ -49,7 +49,7 @@ class Sources extends React.Component {
 	render() {
 		let { sources, open_sources } = this.state;
 		let sources_list = sources.map((source) => (
-			<ListItem button className='pl-4'>
+			<ListItem button className='pl-4' key={source.id}>
 				<ListItemText primary={source.name} />
 				<OpenInNew
 					fontSize='small'
