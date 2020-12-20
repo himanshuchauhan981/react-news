@@ -31,14 +31,15 @@ class Sources extends React.Component {
 	}
 
 	componentDidMount() {
-		this.news_service.get_news_sources().then((res) => {
-			let sources = res.data.sources.slice(5, 10);
+		let country_code = this.props.country.code;
+		this.news_service.get_news_sources(country_code).then((res) => {
+			let sources = res.data.sources;
 			let sources_list = sources.map((source) => ({
 				id: source.id,
 				name: source.name,
 				url: source.url,
 			}));
-			this.setState({ sources: sources_list });
+			this.props.set_country_sources(sources_list);
 		});
 	}
 
@@ -55,8 +56,8 @@ class Sources extends React.Component {
 	};
 
 	render() {
-		let { sources, open_sources } = this.state;
-		let sources_list = sources.map((source) => (
+		let { open_sources } = this.state;
+		let sources_list = this.props.sources.map((source) => (
 			<ListItem
 				button
 				className='pl-4'
@@ -108,6 +109,8 @@ class Sources extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		total_favorites: state.favorites.length,
+		country: state.selected_country,
+		sources: state.country_sources,
 	};
 };
 
@@ -116,7 +119,13 @@ const mapDispatchToProps = (dispatch) => {
 		set_source_news: (data) => {
 			dispatch({
 				type: ActionType.SET_SOURCE_NEWS,
-				data: data,
+				data,
+			});
+		},
+		set_country_sources: (data) => {
+			dispatch({
+				type: ActionType.SET_COUNTRY_SOURCES,
+				data,
 			});
 		},
 	};

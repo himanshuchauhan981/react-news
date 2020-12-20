@@ -6,10 +6,10 @@ class NewsService {
 		this.API_KEY = process.env.REACT_APP_API_KEY;
 	}
 
-	get_news_sources = () => {
+	get_news_sources = (country_code) => {
 		return axios({
 			method: 'get',
-			url: `${this.BASE_URL}/sources?apiKey=${this.API_KEY}`,
+			url: `${this.BASE_URL}/sources?country=${country_code}&apiKey=${this.API_KEY}`,
 		});
 	};
 

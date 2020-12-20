@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Favorite, Launch, OpenInNewOutlined } from '@material-ui/icons';
+import { Favorite, Launch, OpenInBrowser } from '@material-ui/icons';
 import moment from 'moment';
 import color from 'randomcolor';
 
@@ -35,16 +35,19 @@ const NewsList = (props) => {
 				action={
 					<Tooltip title='Open link'>
 						<IconButton onClick={() => window.open(news.url)}>
-							<OpenInNewOutlined fontSize='small' />
+							<OpenInBrowser fontSize='small' />
 						</IconButton>
 					</Tooltip>
 				}
 			/>
 			<CardMedia image={news.urlToImage} className='news_image' />
 			<CardContent>
-				<Typography variant='body2' component='p'>
-					By <strong>{news.author}</strong>
-				</Typography>
+				{news.author !== null ? (
+					<Typography variant='body2' component='p'>
+						By <strong>{news.author}</strong>
+					</Typography>
+				) : null}
+
 				<Typography variant='h6' color='textPrimary' component='p'>
 					{news.description}
 				</Typography>

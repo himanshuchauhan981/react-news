@@ -8,7 +8,11 @@ const NewsItem = (props) => {
 		<Paper>
 			<p className='news_headline mb-0 px-3 py-2'>{props.news.title}</p>
 
-			<img src={props.news.urlToImage} className='news_image' />
+			<img
+				src={props.news.urlToImage}
+				alt={props.news.title}
+				className='news_image'
+			/>
 			<div className='py-2 px-3'>
 				<p className='news_content text-justify'>
 					{props.news.content === null
